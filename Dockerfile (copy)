@@ -1,6 +1,8 @@
-FROM registry.cn-hangzhou.aliyuncs.com/rainbow954/ubuntu-tools
-MAINTAINER ryan Zhang <rainbow954@163.com>
+FROM openjdk:8u121-jre-alpine
 
+LABEL maintainer "ryan"
+
+RUN apk -U add bash
 
 ARG ES_VERSION=6.2.3
 # avoid conflicts with debian host systems when mounting to host volume
