@@ -24,7 +24,12 @@ ENV ES_HOME=/usr/share/elasticsearch-$ES_VERSION \
     DEFAULT_ES_USER_UID=$DEFAULT_ES_USER_UID \
     ES_JAVA_OPTS="-Xms1g -Xmx1g"
 
-RUN adduser -S -s /bin/sh -u $DEFAULT_ES_USER_UID $DEFAULT_ES_USER
+#RUN adduser -S -s /bin/sh -u $DEFAULT_ES_USER_UID $DEFAULT_ES_USER
+# 添加测试用户admin，密码admin，并且将此用户添加到sudoers里  
+RUN groupadd $DEFAULT_ES_USER && mkdir -p /home/$DEFAULT_ES_USER
+RUN useradd -d /home/$DEFAULT_ES_USER -g $DEFAULT_ES_USER $DEFAULT_ES_USER && chown -R $DEFAULT_ES_USER:$DEFAULT_ES_USER /home/$DEFAULT_ES_USER
+RUN echo $DEFAULT_ES_USER:$DEFAULT_ES_USER | chpasswd  
+RUN echo $DEFAULT_ES_USER"   ALL=(ALL)       ALL" >> /etc/sudoers  
 
 VOLUME ["/data","/conf"]
 
