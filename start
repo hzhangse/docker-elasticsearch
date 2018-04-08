@@ -125,7 +125,6 @@ if [ ! -e /conf/log4j2.properties ]; then
 fi
 
 OPTS="$OPTS \
-  -E path.conf=/conf \
   -E path.data=/data \
   -E path.logs=/data \
   -E transport.tcp.port=9300 \
@@ -149,6 +148,7 @@ mkdir -p /conf/scripts
 
 echo "Starting Elasticsearch with the options $OPTS"
 CMD="$ES_HOME/bin/elasticsearch $OPTS"
+echo $CMD
 if [ `id -u` = 0 ]; then
   echo "Running as non-root..."
   chown -R $DEFAULT_ES_USER /data /conf $ES_HOME
