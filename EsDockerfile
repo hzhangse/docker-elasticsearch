@@ -1,0 +1,12 @@
+FROM docker.elastic.co/elasticsearch/elasticsearch:6.2.3
+MAINTAINER ryan Zhang <rainbow954@163.com>
+
+
+ARG ES_VERSION=6.2.2
+ENV ES_HOME=/usr/share/elasticsearch 
+COPY installPlugin /installPlugin
+
+RUN chmod a+x /installPlugin
+RUN /installPlugin
+
+
