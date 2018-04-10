@@ -22,8 +22,7 @@ sudo docker run -d --name es60-master --publish 9200:9200 --publish 9300:9300 --
     -e NODE_NAME=es6-master \
     -e CLUSTER=es6-cluster \
     -e TYPE=NON_DATA \
-    -e PLUGINS=https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.2.3/elasticsearch-analysis-ik-6.2.3.zip,x-pack \
-    registry.cn-hangzhou.aliyuncs.com/rainbow954/elasticsearch:latest /start
+     registry.cn-hangzhou.aliyuncs.com/rainbow954/elasticsearch:latest /start
 
 
 # setup node 1
@@ -33,7 +32,6 @@ sudo docker run -d --name es61 --link es60-master --net shadownet --ip 172.19.0.
         -e CLUSTER=es6-cluster \
         -e TYPE=DATA  \
         -e UNICAST_HOSTS=es60-master  \
-        -e PLUGINS=https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.2.3/elasticsearch-analysis-ik-6.2.3.zip,x-pack \
         registry.cn-hangzhou.aliyuncs.com/rainbow954/elasticsearch:latest /start
 
 # setup node 2
@@ -43,5 +41,4 @@ sudo docker run -d --name es62 --link es60-master --net shadownet --ip 172.19.0.
         -e CLUSTER=es6-cluster \
         -e TYPE=DATA  \
         -e UNICAST_HOSTS=es60-master  \
-        -e PLUGINS=https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.2.3/elasticsearch-analysis-ik-6.2.3.zip,x-pack \
         registry.cn-hangzhou.aliyuncs.com/rainbow954/elasticsearch:latest /start

@@ -1,7 +1,6 @@
 #!/bin/sh
 
-PLUGINS=https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.2.2/elasticsearch-analysis-ik-6.2.2.zip,x-pack
-   
+ 
 
 pre_checks() {
   mmc=$(sysctl vm.max_map_count|sed 's/.*= //')
