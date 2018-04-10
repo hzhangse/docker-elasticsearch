@@ -2,7 +2,7 @@ FROM docker.elastic.co/elasticsearch/elasticsearch:6.2.3
 MAINTAINER ryan Zhang <rainbow954@163.com>
 
 
-ARG ES_VERSION=6.2.2
+ARG ES_VERSION=6.2.3
 ENV ES_HOME=/usr/share/elasticsearch 
 COPY installPlugin /installPlugin
 

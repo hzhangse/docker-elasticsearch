@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PLUGINS=https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v${ES_VERSION}/elasticsearch-analysis-ik-${ES_VERSION}.zip,x-pack
+PLUGINS=https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v${ES_VERSION}/elasticsearch-analysis-ik-${ES_VERSION}.zip
    
 
 install_plugins() {
