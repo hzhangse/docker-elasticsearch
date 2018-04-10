@@ -1,13 +1,14 @@
 version: '2.2'
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
     container_name: elasticsearch-master
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - node.master=true 
+      - node.name= es6-master
       - node.data=false 
       - node.ingest=true  
     ulimits:
@@ -21,7 +22,7 @@ services:
     networks:
       - esnet
   elasticsearch-node1:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
     container_name: elasticsearch-node1
     environment:
       - cluster.name=docker-cluster
@@ -30,6 +31,7 @@ services:
       - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
       - node.master=false 
       - node.data=true 
+      - node.name= es6-node1
       - node.ingest=false  
     ulimits:
       memlock:
@@ -40,7 +42,7 @@ services:
     networks:
       - esnet
   elasticsearch-node2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
     container_name: elasticsearch-node2
     environment:
       - cluster.name=docker-cluster
@@ -49,6 +51,7 @@ services:
       - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
       - node.master=false 
       - node.data=true 
+      - node.name= es6-node2
       - node.ingest=false  
     ulimits:
       memlock:
