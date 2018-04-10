@@ -37,7 +37,9 @@ WORKDIR $ES_HOME
 
 COPY java.policy /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/
 COPY start /start
+COPY installPlugin /installPlugin
 COPY log4j2.properties $ES_HOME/config/
 RUN chmod a+x /start
-RUN /start
-#CMD ["/start"]
+RUN chmod a+x /installPlugin
+RUN /installPlugin
+CMD ["/start"]
