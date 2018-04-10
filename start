@@ -70,7 +70,7 @@ install_plugins() {
     for p in $(echo $PLUGINS | awk -v RS=, '{print}')
     do
       echo "Installing the plugin $p"
-      $ES_HOME/bin/elasticsearch-plugin install $p
+      $ES_HOME/bin/elasticsearch-plugin install $p --batch
     done
   else
     mkdir -p $ES_HOME/plugins
