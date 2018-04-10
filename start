@@ -1,5 +1,8 @@
 #!/bin/sh
 
+PLUGINS=https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.2.3/elasticsearch-analysis-ik-6.2.3.zip,x-pack
+   
+
 pre_checks() {
   mmc=$(sysctl vm.max_map_count|sed 's/.*= //')
   if [[ $mmc -lt 262144 ]]; then

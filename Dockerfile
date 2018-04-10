@@ -2,7 +2,7 @@ FROM registry.cn-hangzhou.aliyuncs.com/rainbow954/ubuntu-tools
 MAINTAINER ryan Zhang <rainbow954@163.com>
 
 
-ARG ES_VERSION=6.2.3
+ARG ES_VERSION=6.2.2
 # avoid conflicts with debian host systems when mounting to host volume
 ARG DEFAULT_ES_USER_UID=1100
 
@@ -22,7 +22,7 @@ HEALTHCHECK --timeout=5s CMD wget -q -O - http://$HOSTNAME:9200/_cat/health
 ENV ES_HOME=/usr/share/elasticsearch-$ES_VERSION \
     DEFAULT_ES_USER=elasticsearch \
     DEFAULT_ES_USER_UID=$DEFAULT_ES_USER_UID \
-    ES_JAVA_OPTS="-Xms1g -Xmx1g"
+    ES_JAVA_OPTS="-Xms512m -Xmx512m"
 
 #RUN adduser -S -s /bin/sh -u $DEFAULT_ES_USER_UID $DEFAULT_ES_USER
 # 添加测试用户admin，密码admin，并且将此用户添加到sudoers里  
@@ -39,4 +39,5 @@ COPY java.policy /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/
 COPY start /start
 COPY log4j2.properties $ES_HOME/config/
 RUN chmod a+x /start
+RUN /start
 #CMD ["/start"]
