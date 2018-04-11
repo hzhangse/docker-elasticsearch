@@ -1,1 +1,1 @@
-{{jdbc.sql}} >= :sql_last_value
+{{jdbc.condition.sql}} >= :sql_last_value
