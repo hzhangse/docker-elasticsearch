@@ -87,8 +87,7 @@ services:
       jdbc.condition.sql: select * from contacts where creation_time >=
     networks:
       - esnet 
-    ports:
-      - 5601:5601       
+      
     
 volumes:
   es0:
@@ -113,3 +112,5 @@ volumes:
 
 networks:
   esnet:
+    external:
+      name: shadownet

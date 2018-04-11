@@ -12,7 +12,7 @@ cat /usr/share/logstash/config/logstash-jdbc.conf.template | sed \
 
 
 cat /usr/share/logstash/config/jdbc/jdbc.sql.template | sed \
-  -e "s|{{jdbc.sql}}|${jdbc.sql}|g" \
+  -e "s|{{jdbc.condition.sql}}|${jdbc.condition.sql}|g" \
    > /usr/share/logstash/config/jdbc/jdbc.sql
 
 
