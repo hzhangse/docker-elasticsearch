@@ -36,9 +36,9 @@ filter {
 output {
    
    elasticsearch {
-        hosts => ["{{elasticsearch.hosts}}"] 
-        index => "{{elasticsearch.index}}"
-        document_type => "{{elasticsearch.index.type}}"
+        hosts => ["{{elasticsearch_hosts}}"] 
+        index => "{{elasticsearch_index}}"
+        document_type => "{{elasticsearch_index_type}}"
         document_id => "%{id}"
         
        
