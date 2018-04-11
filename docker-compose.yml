@@ -87,7 +87,7 @@ services:
       jdbc_condition_sql: select * from contacts where creation_time >=
     networks:
       - esnet 
-      
+    command: ["-f", "/usr/share/logstash/config/logstash-jdbc.conf"] 
     
 volumes:
   es0:
