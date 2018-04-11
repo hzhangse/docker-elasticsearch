@@ -82,8 +82,8 @@ services:
       jdbc_user: root
       jdbc_password: root
       elasticsearch_hosts:  elasticsearch-master:9200
-      elasticsearch.index: contact-index
-      elasticsearch.index.type: contact  
+      elasticsearch_index:  contact-index
+      elasticsearch_index_type: contact  
       jdbc_condition_sql: select * from contacts where creation_time >=
     networks:
       - esnet 
