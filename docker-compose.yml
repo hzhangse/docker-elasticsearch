@@ -61,6 +61,7 @@ services:
       - es2:/usr/share/elasticsearch/data
     networks:
       - esnet
+
   kibana:
     image: docker.elastic.co/kibana/kibana:6.2.3
     container_name: elasticsearch-kibana
@@ -71,26 +72,27 @@ services:
     networks:
       - esnet 
     ports:
-      - 5601:5601       
+      - 5601:5601   
+    
 volumes:
   es0:
     driver: local
     driver_opts:
          type: none
-         device: /home/ryan/git/docker-elasticsearch/es-cluster/es0  
+         device: /home/ryan/work/es-cluster/es0  
          o: bind
       
   es1:
     driver: local
     driver_opts:
          type: none
-         device: /home/ryan/git/docker-elasticsearch/es-cluster/es1  
+         device: /home/ryan/work/es-cluster/es1  
          o: bind
   es2:
     driver: local
     driver_opts:
          type: none
-         device: /home/ryan/git/docker-elasticsearch/es-cluster/es2  
+         device: /home/ryan/work/es-cluster/es2  
          o: bind
 
 networks:
