@@ -81,10 +81,10 @@ services:
       jdbc_connection_string: jdbc:mysql://172.19.0.10:3306/mytest
       jdbc_user: root
       jdbc_password: root
-      elasticsearch.hosts: elasticsearch-master:9200
+      elasticsearch_hosts:  elasticsearch-master:9200
       elasticsearch.index: contact-index
       elasticsearch.index.type: contact  
-      jdbc.condition.sql: select * from contacts where creation_time >=
+      jdbc_condition_sql: select * from contacts where creation_time >=
     networks:
       - esnet 
       
