@@ -2,7 +2,7 @@ FROM docker.elastic.co/logstash/logstash:6.2.3
 RUN  /usr/share/logstash/bin/logstash-plugin install logstash-input-jdbc
 COPY logstash-config /usr/share/logstash/config
 RUN echo $(whoami)
-RUN  su root
+RUN echo root|su root
 RUN  chmod a+x /usr/share/logstash/config/config.sh
 RUN  chmod a+x /entrypoint.sh
 # https://github.com/Yelp/dumb-init
