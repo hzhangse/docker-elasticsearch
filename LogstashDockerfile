@@ -13,8 +13,7 @@ RUN curl -fLsS -o /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/rel
 USER logstash
 
 
-RUN /usr/share/logstash/config/config.sh
 
-ENTRYPOINT ["/usr/local/bin/dumb-init", "/usr/share/logstash/config/"]
+ENTRYPOINT ["/usr/local/bin/dumb-init", "/usr/share/logstash/config/entrypoint.sh"]
 
 
