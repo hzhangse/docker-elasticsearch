@@ -5,7 +5,7 @@ COPY logstash-config /usr/share/logstash/config
 RUN echo $(whoami)
 USER root
 RUN  chmod a+x /usr/share/logstash/config/config.sh
-RUN  chmod a+x /entrypoint.sh
+RUN  chmod a+x /usr/share/logstash/config/entrypoint.sh
 # https://github.com/Yelp/dumb-init
 RUN curl -fLsS -o /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.0.2/dumb-init_1.0.2_amd64 && chmod +x /usr/local/bin/dumb-init
 
@@ -15,6 +15,6 @@ USER logstash
 
 RUN /usr/share/logstash/config/config.sh
 
-ENTRYPOINT ["/usr/local/bin/dumb-init", "/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/dumb-init", "/usr/share/logstash/config/"]
 
 
