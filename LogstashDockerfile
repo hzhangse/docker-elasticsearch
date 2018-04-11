@@ -4,7 +4,7 @@ RUN  /usr/share/logstash/bin/logstash-plugin install logstash-input-jdbc
 COPY logstash-config /usr/share/logstash/config
 
 USER root
-RUN  chmod -R 777 /user/share/logstash/config 
+RUN  chmod -R 777 /usr/share/logstash/config 
 RUN  chmod a+x /usr/share/logstash/config/config.sh
 RUN  chmod a+x /usr/share/logstash/config/entrypoint.sh
 # https://github.com/Yelp/dumb-init
