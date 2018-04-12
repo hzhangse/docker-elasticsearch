@@ -4,6 +4,10 @@ cat /usr/share/logstash/config/logstash-jdbc.conf.template | sed \
   -e "s|{{jdbc_connection_string}}|${jdbc_connection_string}|g" \
   -e "s|{{jdbc_user}}|${jdbc_user:root}|g" \
   -e "s|{{jdbc_password}}|${jdbc_password:root}|g" \
+  -e "s|{{jdbc_page_size}}|${jdbc_page_size}|g" \
+  -e "s|{{use_column_value}}|${use_column_value}|g" \
+  -e "s|{{tracking_column}}|${tracking_column}|g" \
+  -e "s|{{tracking_column_type}}|${tracking_column_type}|g" \
   -e "s|{{elasticsearch_hosts}}|${elasticsearch_hosts}|g" \
   -e "s|{{elasticsearch_index}}|${elasticsearch_index}|g" \
   -e "s|{{elasticsearch_index_type}}|${elasticsearch_index_type}|g" \
