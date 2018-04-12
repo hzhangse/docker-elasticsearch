@@ -78,13 +78,18 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-logstash
     container_name: elasticsearch-logstash
     environment:
-      jdbc_connection_string: jdbc:mysql://172.19.0.10:3306/mytest
+      jdbc_connection_string: jdbc:mysql://192.168.0.119:3306/gse_db?characterEncoding=utf8
       jdbc_user: root
-      jdbc_password: root
+      jdbc_password: 1234
       elasticsearch_hosts:  elasticsearch-master:9200
-      elasticsearch_index:  contact-index
-      elasticsearch_index_type: contact  
-      jdbc_condition_sql: select * from contacts where creation_time >=
+      elasticsearch_index:  wcunews-index
+      elasticsearch_index_type: wcunews  
+      jdbc_condition_sql: SELECT * FROM gse_db.wcu_news
+      tracking_column: postdate
+      tracking_column_type: numeric
+      use_column_value: false
+      jdbc_page_size: 2000
+      
     networks:
       - esnet 
     command: ["-f", "/usr/share/logstash/config/logstash-jdbc.conf"] 

@@ -12,10 +12,10 @@ input {
   # the name of the driver class for mysql
   jdbc_driver_class => "com.mysql.jdbc.Driver"
   jdbc_paging_enabled => "true"
-  jdbc_page_size => "50000"
-   use_column_value => true
-   tracking_column => "creation_time"
-   tracking_column_type => "timestamp"
+  jdbc_page_size => "{{jdbc_page_size}}"
+   use_column_value => {{use_column_value}}
+   tracking_column => "{{tracking_column}}"
+   tracking_column_type => "{{tracking_column_type}}"
    last_run_metadata_path => "/usr/share/logstash/config/jdbc/logstash_jdbc_last_run"
 #以下对应着要执行的sql的绝对路径。
   statement_filepath => "/usr/share/logstash/config/jdbc/jdbc.sql"
