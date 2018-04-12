@@ -78,17 +78,18 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-logstash
     container_name: elasticsearch-logstash
     environment:
-      jdbc_connection_string: jdbc:mysql://192.168.0.119:3306/gse_db?characterEncoding=utf8
+      jdbc_connection_string: jdbc:mysql://172.19.0.10:3306/gse_db?characterEncoding=utf8
       jdbc_user: root
-      jdbc_password: 1234
+      jdbc_password: root
       elasticsearch_hosts:  elasticsearch-master:9200
       elasticsearch_index:  wcunews-index
       elasticsearch_index_type: wcunews  
-      jdbc_condition_sql: SELECT * FROM gse_db.wcu_news
-      tracking_column: postdate
-      tracking_column_type: numeric
-      use_column_value: "false"
-      jdbc_page_size: 2000
+      jdbc_condition_sql: SELECT * FROM gse_db.wcu_news where creation_time> :logstash_jdbc_last_run
+      tracking_column: creation_time
+      tracking_column_type: timestamp
+      use_column_value: "true"
+      jdbc_page_size: 100
+      send_schedule_expression: * * * * *
       
     networks:
       - esnet 

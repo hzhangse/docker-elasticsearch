@@ -11,6 +11,7 @@ cat /usr/share/logstash/config/logstash-jdbc.conf.template | sed \
   -e "s|{{elasticsearch_hosts}}|${elasticsearch_hosts}|g" \
   -e "s|{{elasticsearch_index}}|${elasticsearch_index}|g" \
   -e "s|{{elasticsearch_index_type}}|${elasticsearch_index_type}|g" \
+  -e "s|{{send_schedule_expression}}|${send_schedule_expression}|g" \
    > /usr/share/logstash/config/logstash-jdbc.conf
 
 
