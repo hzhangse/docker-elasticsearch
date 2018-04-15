@@ -1,0 +1,72 @@
+version: '3'
+services:
+  elasticsearch:
+    image: youngbe/docker-swarm-elasticsearch:5.5.0
+    environment:
+      - SERVICE_NAME=elasticsearch
+      - cluster.name=elasticsearch-cluster
+      - bootstrap.memory_lock=true
+      - node.master=true
+      - node.data=false
+      - node.ingest=false
+      # - xpack.security.enabled=false
+      # https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html#split-brain
+      - discovery.zen.minimum_master_nodes=2
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m -XX:-AssumeMP"
+    volumes:
+      - /vagrant/plugins/ik:/usr/share/elasticsearch/plugins/ik
+    networks:
+      - elastic_cluster
+    deploy:
+      mode: replicated
+      replicas: 3
+      resources:
+        limits:
+          memory: 1g
+
+  elastic_data:
+    image: youngbe/docker-swarm-elasticsearch:5.5.0
+    environment:
+      - SERVICE_NAME=elasticsearch
+      - cluster.name=elasticsearch-cluster
+      - bootstrap.memory_lock=true
+      - node.master=false
+      - node.data=true
+      - node.ingest=true
+      - node.max_local_storage_nodes=5
+      # - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m -XX:-AssumeMP"
+    volumes:
+      - /mnt/esdata:/usr/share/elasticsearch/data
+      - /vagrant/plugins/ik:/usr/share/elasticsearch/plugins/ik
+    networks:
+      - elastic_cluster
+    ports:
+      - 9200:9200
+      - 9300:9300
+    deploy:
+      mode: replicated
+      replicas: 2
+      resources:
+        limits:
+          memory: 1g
+          
+  kibana:
+    image: docker.elastic.co/kibana/kibana:5.5.0
+    networks:
+      - elastic_cluster
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    environment:
+      ELASTICSEARCH_URL: http://192.168.100.20:9200
+
+networks:
+  elastic_cluster:
+    driver: overlay
+    ipam:
+      driver: default
+      config:
+      - subnet: 10.0.10.0/24
+      

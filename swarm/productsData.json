@@ -1,0 +1,6 @@
+{ "index" : { "_index" : "product", "_type" : "goods", "_id" : "1" } }
+{ "GOOD_ID" : "1", "GOOD_NM": "Canon EOS 5D Mark IV 單機身 公司貨" }
+{ "index" : { "_index" : "product", "_type" : "goods", "_id" : "2" } }
+{ "GOOD_ID" : "2", "GOOD_NM": "Mac mini 2.8GHz 雙核心 Intel Core i5 1TB Fusion Drive" }
+{ "index" : { "_index" : "product", "_type" : "goods", "_id" : "3" } }
+{ "GOOD_ID" : "2", "GOOD_NM": "春風 柔膚感抽取式衛生紙(110抽x24包x3串/箱)" }
