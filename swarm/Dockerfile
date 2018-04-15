@@ -14,15 +14,12 @@ RUN echo "elasticsearch - memlock unlimited" >> /etc/security/limits.conf
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#limits.conf
 RUN ulimit -n 65536
 
+COPY es-docker /usr/share/elasticsearch/bin/
 
+USER elasticsearch
 
-COPY installPlugin /installPlugin
+COPY ../installPlugin /installPlugin
 
 RUN chmod a+x /installPlugin
 RUN /installPlugin
-
-COPY /swarm/es-docker /usr/share/elasticsearch/bin/
-USER elasticsearch
-
-
 
