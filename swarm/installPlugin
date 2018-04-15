@@ -1,0 +1,20 @@
+#!/bin/sh
+
+PLUGINS=https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v${ES_VERSION}/elasticsearch-analysis-ik-${ES_VERSION}.zip
+   
+
+install_plugins() {
+  if [ -n "$PLUGINS" ]; then
+    for p in $(echo $PLUGINS | awk -v RS=, '{print}')
+    do
+      echo "Installing the plugin $p"
+      $ES_HOME/bin/elasticsearch-plugin install $p --batch
+    done
+  else
+    mkdir -p $ES_HOME/plugins
+  fi
+}
+
+
+install_plugins
+

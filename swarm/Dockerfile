@@ -18,7 +18,7 @@ COPY es-docker /usr/share/elasticsearch/bin/
 
 USER elasticsearch
 
-COPY ../installPlugin /installPlugin
+COPY installPlugin /installPlugin
 
 RUN chmod a+x /installPlugin
 RUN /installPlugin
