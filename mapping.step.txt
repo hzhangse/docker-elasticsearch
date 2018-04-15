@@ -1,0 +1,133 @@
+curl -XDELETE http://localhost:9200/wcunews-index
+curl -XPUT http://localhost:9200/wcunews-index
+curl -XPOST http://localhost:9200/wcunews-index/wcunews/_mapping -H 'Content-Type:application/json' -d'
+{
+	"properties": {
+		
+		"@version": {
+			"type": "keyword"
+
+		},
+		"id": {
+			"type": "long"
+		},
+		"link": {
+			"type": "keyword"
+		},
+		"news_txt": {
+			"type": "text",
+			"analyzer": "ik_smart",
+			"search_analyzer": "ik_smart"
+		},
+		"newskey": {
+			"type": "keyword"
+
+		},
+		"postdate": {
+			"type": "keyword"
+		},
+		"tag": {
+			"type": "keyword"
+		},
+		"title": {
+			"type": "text",
+			"fields": {
+				"keyword": {
+					"type": "keyword",
+					"ignore_above": 256
+				}
+			}
+		},
+		"type": {
+			"type": "keyword"
+		},
+		"university_id": {
+			"type": "long"
+		},
+		"creation_time": {
+			"type": "date"
+		}
+	}
+}'
+
+
+
+curl -XPOST http://localhost:9200/wcunews-index/wcunews/_search   -H 'Content-Type:application/json' -d'
+{
+    "query" : { "match" : { "news_txt" : "department" }},
+    "highlight" : {
+        "pre_tags" : ["<tag1>", "<tag2>"],
+        "post_tags" : ["</tag1>", "</tag2>"],
+        "fields" : {
+            "news_txt" : {}
+        }
+    }
+}'
+
+
+
+curl -XPOST http://localhost:9200/wcunews-index/wcunews/_search   -H 'Content-Type:application/json' -d'
+{
+    "query" : { "match" : { "news_txt" : "department" }},
+    "highlight" : {
+        "pre_tags" : ["<tag1>", "<tag2>"],
+        "post_tags" : ["</tag1>", "</tag2>"],
+        "fields" : {
+            "news_txt" : {}
+        }
+    }
+}'
+
+curl -XPOST http://localhost:9200/wcunews-index/wcunews/_search   -H 'Content-Type:application/json' -d'
+{
+    "query": {
+        "query_string" : {
+            "default_field" : "news_txt",
+            "query" : "(department AND teach) OR (apple)"
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+curl -XPUT http://localhost:9200/demo_index
+
+curl -XPOST http://localhost:9200/demo_index/demo/_mapping -H 'Content-Type:application/json' -d'
+{
+"properties": {
+	"title": {
+		"type": "text"
+	},
+	"tag": {
+		"type": "keyword"
+	},
+	"publishTime": {
+		"type": "date"
+	}
+}
+}'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
