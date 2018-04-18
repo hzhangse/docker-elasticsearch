@@ -16,7 +16,7 @@ services:
       tracking_column: id
       tracking_column_type: numeric
       use_column_value: "true"
-      jdbc_page_size: 2000
+      jdbc_page_size: 1000
       send_schedule_expression: "* * * * *"
       
     networks:
