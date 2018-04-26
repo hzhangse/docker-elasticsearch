@@ -64,6 +64,11 @@ curl -XPOST http://localhost:9200/wcunews-index/wcunews/_search   -H 'Content-Ty
     }
 }'
 
+curl -XGET http://localhost:9200/wcunews-index/wcunews/_search   -H 'Content-Type:application/json' -d'
+{
+    "query" : { "match_all" : {}},
+}'
+
 
 
 curl -XPOST http://localhost:9200/wcunews-index/wcunews/_search   -H 'Content-Type:application/json' -d'

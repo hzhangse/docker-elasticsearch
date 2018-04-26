@@ -15,7 +15,6 @@ services:
       memlock:
         soft: -1
         hard: -1
-    mem_limit: 1024m
     volumes:
       - es0:/usr/share/elasticsearch/data
     ports:
@@ -25,10 +24,12 @@ services:
   elasticsearch-node1:
     image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
     container_name: elasticsearch-node1
+    mem_limit: 800000000
+    memswap_limit: 800000000    
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms2048m -Xmx2048m"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
       - node.master=false 
       - node.data=true 
@@ -38,14 +39,7 @@ services:
       memlock:
         soft: -1
         hard: -1
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 2048M
-        reservations:
-          cpus: '0.25'
-          memory: 1024M
+    
     volumes:
       - es1:/usr/share/elasticsearch/data
     networks:
@@ -53,10 +47,12 @@ services:
   elasticsearch-node2:
     image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
     container_name: elasticsearch-node2
+    mem_limit: 800000000
+    memswap_limit: 800000000   
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms2048m -Xmx2048m"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
       - node.master=false 
       - node.data=true 
@@ -66,14 +62,6 @@ services:
       memlock:
         soft: -1
         hard: -1
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 2048M
-        reservations:
-          cpus: '0.25'
-          memory: 1024M
     volumes:
       - es2:/usr/share/elasticsearch/data
     networks:
@@ -85,20 +73,20 @@ volumes:
     driver: local
     driver_opts:
          type: none
-         device: /var/data/tidecloud/es-cluster/es0  
+         device: /home/ryan/work/es-cluster/es0  
          o: bind
       
   es1:
     driver: local
     driver_opts:
          type: none
-         device: /var/data/tidecloud/es-cluster/es1 
+         device: /home/ryan/work/es-cluster/es1  
          o: bind
   es2:
     driver: local
     driver_opts:
          type: none
-         device: /var/data/tidecloud/es-cluster/es2 
+         device: /home/ryan/work/es-cluster/es2  
          o: bind
 
 networks:

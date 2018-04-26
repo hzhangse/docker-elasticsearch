@@ -1,0 +1,18 @@
+version: '2.2'
+services:
+  
+  
+  logstash:
+    image: docker.elastic.co/beats/filebeat:6.2.3
+    container_name: elasticsearch-filebeat
+    
+      
+    networks:
+      - esnet 
+  
+     
+
+networks:
+  esnet:
+    external:
+      name: shadownet

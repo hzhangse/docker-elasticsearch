@@ -27,7 +27,7 @@ services:
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1800m -Xmx1800m"
       - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
       - node.master=false 
       - node.data=true 
@@ -37,6 +37,7 @@ services:
       memlock:
         soft: -1
         hard: -1
+    
     volumes:
       - es1:/usr/share/elasticsearch/data
     networks:
@@ -44,10 +45,11 @@ services:
   elasticsearch-node2:
     image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
     container_name: elasticsearch-node2
+   
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1800m -Xmx1800m"
       - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
       - node.master=false 
       - node.data=true 
@@ -68,20 +70,20 @@ volumes:
     driver: local
     driver_opts:
          type: none
-         device: /home/ryan/work/es-cluster/es0  
+         device: /home/ryan/es-cluster/es0  
          o: bind
       
   es1:
     driver: local
     driver_opts:
          type: none
-         device: /home/ryan/work/es-cluster/es1  
+         device: /home/ryan/es-cluster/es1  
          o: bind
   es2:
     driver: local
     driver_opts:
          type: none
-         device: /home/ryan/work/es-cluster/es2  
+         device: /home/ryan/es-cluster/es2  
          o: bind
 
 networks:
