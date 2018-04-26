@@ -1,8 +1,8 @@
 #!/bin/sh
 
-PLUGINS=https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v${ES_VERSION}/elasticsearch-analysis-ik-${ES_VERSION}.zip,ingest-geoip,ingest-user-agent
+PLUGINS=https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v${ES_VERSION}/elasticsearch-analysis-ik-${ES_VERSION}.zip
    
-
+#ingest-geoip,ingest-user-agent 已经存在，不用安装
 install_plugins() {
   if [ -n "$PLUGINS" ]; then
     for p in $(echo $PLUGINS | awk -v RS=, '{print}')
