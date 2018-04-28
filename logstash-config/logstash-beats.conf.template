@@ -8,9 +8,9 @@ input {
 filter {
 	if [type] == "beats" {
 		grok {
-			match => {
-				"message" => "{{beats_grok_expression}}"
-			}
+			match => [
+				{{beats_grok_expression}}
+			]
 		}
 		date {
 			match => ["{{beats_log_time}}", "{{beats_date_pattern}}"]
