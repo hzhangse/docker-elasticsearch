@@ -9,7 +9,7 @@ filter {
 	if [type] == "beats" {
 		grok {
 			match => {
-				"message" => "{{beats_grok_expression}}"
+				"message" => {{beats_grok_expression}}
 			}
 		}
 		date {
