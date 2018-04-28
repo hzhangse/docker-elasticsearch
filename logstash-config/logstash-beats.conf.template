@@ -26,6 +26,7 @@ output {
 			hosts => ["{{elasticsearch_hosts}}"] 
 			manage_template => {{beats_manage_template}}
 			index => "{{beats_log_index_name}}"
+			document_type => "{{beats_elasticsearch_index_type}}"
 			
 		}
 	
