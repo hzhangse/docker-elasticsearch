@@ -21,7 +21,7 @@ cat /usr/share/logstash/config/jdbc/jdbc.sql.template | sed \
 
 
 cat /usr/share/logstash/config/logstash-beats.conf.template | sed \
-  -e "s|{{beats_port}}|${beats_port:5044}|g" \
+  -e "s|{{beats_port}}|${beats_port}|g" \
   -e "s|{{beats_grok_expression}}|${beats_grok_expression}|g" \
   -e "s|{{beats_log_time}}|${beats_log_time}|g" \
   -e "s|{{beats_date_pattern}}|${beats_date_pattern}|g" \
