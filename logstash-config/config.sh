@@ -15,9 +15,18 @@ cat /usr/share/logstash/config/logstash-jdbc.conf.template | sed \
    > /usr/share/logstash/config/logstash-jdbc.conf
 
 
-
 cat /usr/share/logstash/config/jdbc/jdbc.sql.template | sed \
   -e "s|{{jdbc_condition_sql}}|${jdbc_condition_sql}|g" \
    > /usr/share/logstash/config/jdbc/jdbc.sql
 
 
+cat /usr/share/logstash/config/logstash-beats.conf.template | sed \
+  -e "s|{{beats_port}}|${beat_port:5044}|g" \
+  -e "s|{{beats_grok_expression}}|${beats_grok_expression}|g" \
+  -e "s|{{beats_log_time}}|${beats_log_time}|g" \
+  -e "s|{{beats_date_pattern}}|${beats_date_pattern}|g" \
+  -e "s|{{elasticsearch_hosts}}|${elasticsearch_hosts}|g" \
+  -e "s|{{beats_manage_template}}|${beats_manage_template:false}|g" \
+  -e "s|{{beats_log_index_name}}|${beats_log_index_name}|g" \
+  -e "s|{{beats_elasticsearch_index_type}}|${beats_elasticsearch_index_type}|g" \
+   > /usr/share/logstash/config/logstash-beats.conf

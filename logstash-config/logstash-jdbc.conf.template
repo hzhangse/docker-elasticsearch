@@ -27,23 +27,25 @@ input {
 }
 
 filter {
-    json {
-        source => "message"
-        remove_field => ["message"]
-    }
+	if [type] == "mysql" {
+		json {
+			source => "message"
+			remove_field => ["message"]
+		}
+	}
 }
 
 output {
-   
-   elasticsearch {
-        hosts => ["{{elasticsearch_hosts}}"] 
-        index => "{{elasticsearch_index}}"
-        document_type => "{{elasticsearch_index_type}}"
-        document_id => "%{id}"
-        
-       
-    }
-    stdout {
-        codec => json_lines
-    }
+	if [type] == "mysql" {
+		elasticsearch {
+			hosts => ["{{elasticsearch_hosts}}"]
+			index => "{{elasticsearch_index}}"
+			document_type => "{{elasticsearch_index_type}}"
+			document_id => "%{id}"
+
+		}
+	}
+	stdout {
+		codec => json_lines
+	}
 }

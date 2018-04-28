@@ -1,0 +1,28 @@
+version: '2.2'
+services:
+  
+  
+  logstash:
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-logstash
+    container_name: elasticsearch-logstash
+    environment:
+      elasticsearch_hosts: elasticsearch-master:9200
+      beats_port: 5044
+      beats_grok_expression: (?<logtime>%{MONTHNUM}-%{MONTHDAY} %{HOUR}:?%{MINUTE}(?::?%{SECOND})) %{LOGLEVEL:loglevel}  -- +%{DATA:progname}: %{GREEDYDATA:logcontent}
+      beats_log_time: logtime
+      beats_date_pattern:  MM-dd HH:mm:ss.SSS
+      beats_log_index_name:  tide-index
+      beats_elasticsearch_index_type: tide  
+      beats_manage_template: false
+     
+      
+    networks:
+      - esnet 
+    command: ["-f", "/usr/share/logstash/config/logstash-beats.conf"] 
+    
+
+
+networks:
+  esnet:
+    external:
+      name: shadownet
