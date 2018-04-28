@@ -15,6 +15,8 @@ filter {
 		date {
 			match => ["{{beats_log_time}}", "{{beats_date_pattern}}"]
 			target => "@timestamp"
+			locale => "en"  
+  			timezone => "+00:00"    
 		}
 	}
 }
