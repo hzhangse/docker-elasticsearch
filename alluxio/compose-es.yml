@@ -17,12 +17,11 @@ services:
       - node.data=false 
       - node.ingest=true  
       - alluxio_path=es0
-      - alluxio.master=172.19.0.111  
+      - alluxio_master=172.19.0.111  
     ulimits:
       memlock:
         soft: -1
         hard: -1
-    volumes:
    
     ports:
       - 9200:9200
@@ -32,6 +31,11 @@ services:
   elasticsearch-node1:
     image: registry.cn-hangzhou.aliyuncs.com/rainbow954/alluxio-es
     container_name: elasticsearch-node1
+    privileged: true 
+    cap_add:  
+        - SYS_ADMIN
+    devices: 
+        - /dev/fuse
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
@@ -43,7 +47,7 @@ services:
       - node.name=es6-node1
       - node.ingest=false
       - alluxio_path=es1  
-      - alluxio.master=172.19.0.111  
+      - alluxio_master=172.19.0.111  
     ulimits:
       memlock:
         soft: -1
@@ -55,6 +59,11 @@ services:
   elasticsearch-node2:
     image: registry.cn-hangzhou.aliyuncs.com/rainbow954/alluxio-es
     container_name: elasticsearch-node2
+    privileged: true 
+    cap_add:  
+        - SYS_ADMIN
+    devices: 
+        - /dev/fuse
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
@@ -66,7 +75,7 @@ services:
       - node.name=es6-node2
       - node.ingest=false  
       - alluxio_path=es2
-      - alluxio.master=172.19.0.111  
+      - alluxio_master=172.19.0.111  
     ulimits:
       memlock:
         soft: -1
@@ -76,8 +85,13 @@ services:
       - esnet
       
   elasticsearch-node3:
-    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
-    container_name: registry.cn-hangzhou.aliyuncs.com/rainbow954/alluxio-es
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/alluxio-es
+    container_name: elasticsearch-node3
+    privileged: true 
+    cap_add:  
+        - SYS_ADMIN
+    devices: 
+        - /dev/fuse
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
@@ -89,7 +103,7 @@ services:
       - node.name=es6-node3
       - node.ingest=false
       - alluxio_path=es3  
-      - alluxio.master=172.19.0.111  
+      - alluxio_master=172.19.0.111  
     ulimits:
       memlock:
         soft: -1
@@ -100,7 +114,7 @@ services:
       - esnet
 
 
-volumes:
+
  
   
 

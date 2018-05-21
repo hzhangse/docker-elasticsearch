@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cat /fuse/bin/alluxio-site.properties.template | sed \
-  -e "s|{{alluxio.master}}|${alluxio.master}|g" \
+  -e "s|{{alluxio_master}}|${alluxio_master}|g" \
    > /fuse/bin/alluxio-site.properties
 
 
