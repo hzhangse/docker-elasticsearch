@@ -13,6 +13,7 @@ COPY fuse /fuse
 RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
 RUN chmod a+x /fuse/bin/alluxio-fuse
 RUN chmod a+x /fuse/bin/config.sh
+RUN chmod 777 -R /fuse
 USER elasticsearch
 
 
