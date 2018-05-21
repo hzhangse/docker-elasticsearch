@@ -9,7 +9,7 @@ RUN yum install -y  fuse fuse-devel
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
-COPY alluxio/fuse /fuse
+COPY fuse /fuse
 RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
 RUN chmod a+x /fuse/bin/alluxio-fuse
 RUN chmod a+x /fuse/bin/config.sh
