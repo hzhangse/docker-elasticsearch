@@ -1,7 +1,7 @@
 version: '3'
 services:
   elasticsearch-master:
-    image:  esflux:latest
+    image:  registry.cn-hangzhou.aliyuncs.com/rainbow954/alluxio-es
     container_name: elasticsearch-master
     privileged: true 
     cap_add:  
@@ -30,7 +30,7 @@ services:
       - esnet
 
   elasticsearch-node1:
-    image: esflux:latest
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/alluxio-es
     container_name: elasticsearch-node1
     environment:
       - cluster.name=docker-cluster
@@ -53,7 +53,7 @@ services:
       - esnet
 
   elasticsearch-node2:
-    image: esflux:latest
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/alluxio-es
     container_name: elasticsearch-node2
     environment:
       - cluster.name=docker-cluster
@@ -77,7 +77,7 @@ services:
       
   elasticsearch-node3:
     image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
-    container_name: esflux:latest
+    container_name: registry.cn-hangzhou.aliyuncs.com/rainbow954/alluxio-es
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
