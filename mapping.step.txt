@@ -64,6 +64,25 @@ curl -XPOST http://localhost:9200/wcunews-index/wcunews/_search   -H 'Content-Ty
     }
 }'
 
+GET /_search
+{
+    "query": {
+        "query_string": {
+            "query": "department",
+            "fields": ["news_txt","news_txt.cn"]
+        }
+    },
+    "highlight": {
+        "order": "score",
+        "fields": {
+            "news_txt": {
+                "matched_fields": ["news_txt", "news_txt.cn"],
+                "type" : "fvh"
+            }
+        }
+    }
+}
+
 curl -XGET http://localhost:9200/wcunews-index/wcunews/_search   -H 'Content-Type:application/json' -d'
 {
     "query" : { "match_all" : {}},

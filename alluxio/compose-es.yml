@@ -1,0 +1,113 @@
+version: '3'
+services:
+  elasticsearch-master:
+    image:  esflux:latest
+    container_name: elasticsearch-master
+    privileged: true 
+    cap_add:  
+        - SYS_ADMIN
+    devices: 
+        - /dev/fuse
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true  
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - node.master=true 
+      - node.name=es6-master
+      - node.data=false 
+      - node.ingest=true  
+      - alluxio_path=es0
+      - alluxio.master=172.19.0.111  
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+   
+    ports:
+      - 9200:9200
+    networks:
+      - esnet
+
+  elasticsearch-node1:
+    image: esflux:latest
+    container_name: elasticsearch-node1
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
+      - node.master=false 
+      - node.data=true 
+      - node.attr.rack_id=es6-node1
+      - node.name=es6-node1
+      - node.ingest=false
+      - alluxio_path=es1  
+      - alluxio.master=172.19.0.111  
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    
+    networks:
+      - esnet
+
+  elasticsearch-node2:
+    image: esflux:latest
+    container_name: elasticsearch-node2
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
+      - node.master=false 
+      - node.data=true 
+      - node.attr.rack_id=es6-node2
+      - node.name=es6-node2
+      - node.ingest=false  
+      - alluxio_path=es2
+      - alluxio.master=172.19.0.111  
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+  
+    networks:
+      - esnet
+      
+  elasticsearch-node3:
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
+    container_name: esflux:latest
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
+      - node.master=false 
+      - node.data=true 
+      - node.attr.rack_id=es6-node3  
+      - node.name=es6-node3
+      - node.ingest=false
+      - alluxio_path=es3  
+      - alluxio.master=172.19.0.111  
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    
+    
+    networks:
+      - esnet
+
+
+volumes:
+ 
+  
+
+networks:
+  esnet:
+    external:
+      name: shadownet
+
+ 
+

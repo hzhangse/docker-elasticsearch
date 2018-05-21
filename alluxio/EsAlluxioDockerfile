@@ -1,0 +1,23 @@
+FROM registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
+MAINTAINER ryan Zhang <rainbow954@163.com>
+
+USER root
+
+RUN yum install -y  fuse fuse-devel
+#Volume /fuse
+
+
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+
+COPY fuse /fuse
+RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
+RUN chmod a+x /usr/local/bin/entrypoint.sh
+RUN chmod a+x /fuse/bin/alluxio-fuse
+RUN chmod a+x /fuse/bin/config.sh
+USER elasticsearch
+
+
+
+
+
+

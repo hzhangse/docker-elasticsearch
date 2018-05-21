@@ -4,7 +4,7 @@ services:
   
   logstash:
     image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-logstash
-    container_name: elasticsearch-logstash
+    container_name: elasticsearch-logstash-mysql
     environment:
       jdbc_connection_string: jdbc:mysql://172.19.0.11:3306/mytest?characterEncoding=utf8
       jdbc_user: root

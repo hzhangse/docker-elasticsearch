@@ -1,0 +1,93 @@
+version: '3'
+services:
+
+
+  alluxio-master:
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/alluxio-fuse-1.7:1.7.1  
+    container_name: alluxio-master
+    hostname: alluxio-master
+    privileged: true 
+    cap_add:  
+        - SYS_ADMIN
+    devices: 
+        - /dev/fuse
+    environment:
+      - ENABLE_FUSE=false
+      - ALLUXIO_MASTER_HOSTNAME=172.19.0.111
+      - ALLUXIO_UNDERFS_ADDRESS=/underStorage 
+      - ALLUXIO_USER_FILE_READTYPE_DEFAULT=CACHE_PROMOTE 
+      - ALLUXIO_USER_FILE_WRITETYPE_DEFAULT=CACHE_THROUGH 
+      - ALLUXIO_SECURITY_AUTHENTICATION.TYPE=SIMPLE
+      - ALLUXIO_SECURITY_AUTHORIZATION.PERMISSION.ENABLED=FALSE       
+    volumes:
+      - log-master:/opt/alluxio/logs/
+      - /mnt/esmount:/underStorage 
+    networks:
+       esnet:
+          ipv4_address: 172.19.0.111
+    command: master
+
+  alluxio-worker01:
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/alluxio-1.7:1.7.1
+    container_name: alluxio-work01
+    hostname: alluxio-work01
+    environment:
+      - ALLUXIO_MASTER_HOSTNAME=172.19.0.111
+      - ALLUXIO_RAM_FOLDER=/opt/ramdisk 
+      - ALLUXIO_WORKER_MEMORY_SIZE=1GB 
+      - ALLUXIO_UNDERFS_ADDRESS=/underStorage 
+      - ALLUXIO_SECURITY_AUTHENTICATION.TYPE=SIMPLE
+      - ALLUXIO_SECURITY_AUTHORIZATION.PERMISSION.ENABLED=FALSE        
+    volumes:
+      - /mnt/ramdisk:/opt/ramdisk
+      - /mnt/esmount:/underStorage 
+    networks:
+       esnet:
+          ipv4_address: 172.19.0.112
+    command: worker
+
+  alluxio-worker02:
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/alluxio-1.7:1.7.1
+    container_name: alluxio-work02
+    hostname: alluxio-work02
+    environment:
+      - ALLUXIO_MASTER_HOSTNAME=172.19.0.111
+      - ALLUXIO_RAM_FOLDER=/opt/ramdisk 
+      - ALLUXIO_WORKER_MEMORY_SIZE=1GB 
+      - ALLUXIO_UNDERFS_ADDRESS=/underStorage 
+      - ALLUXIO_SECURITY_AUTHENTICATION.TYPE=SIMPLE
+      - ALLUXIO_SECURITY_AUTHORIZATION.PERMISSION.ENABLED=FALSE        
+    volumes:
+      - /mnt/ramdisk:/opt/ramdisk
+      - /mnt/esmount:/underStorage 
+    networks:
+       esnet:
+          ipv4_address: 172.19.0.113
+    command: worker
+
+   
+volumes:
+
+ 
+
+  log-master:
+    driver: local
+    driver_opts:
+         type: none
+         device: /var/log/tidecloud/alluxio/log-master
+         o: bind
+
+  ramdisk-fs:
+    driver: local
+    driver_opts:
+         type: none
+         device: /mnt/ramdisk
+         o: bind
+
+networks:
+  esnet:
+    external:
+      name: shadownet
+
+ 
+

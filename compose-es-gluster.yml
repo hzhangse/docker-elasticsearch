@@ -8,7 +8,7 @@ services:
       - bootstrap.memory_lock=true  
       - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
       - node.master=true 
-      - node.name= es6-master
+      - node.name=es6-master
       - node.data=false 
       - node.ingest=true  
     ulimits:
@@ -21,6 +21,7 @@ services:
       - 9200:9200
     networks:
       - esnet
+      
   elasticsearch-node1:
     image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
     container_name: elasticsearch-node1
@@ -31,7 +32,8 @@ services:
       - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
       - node.master=false 
       - node.data=true 
-      - node.name= es6-node1
+      - node.attr.rack_id=es6-node1
+      - node.name=es6-node1
       - node.ingest=false  
     ulimits:
       memlock:
@@ -52,7 +54,8 @@ services:
       - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
       - node.master=false 
       - node.data=true 
-      - node.name= es6-node2
+      - node.attr.rack_id=es6-node2
+      - node.name=es6-node2
       - node.ingest=false  
     ulimits:
       memlock:
@@ -72,7 +75,8 @@ services:
       - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
       - node.master=false 
       - node.data=true 
-      - node.name= es6-node3
+      - node.attr.rack_id=es6-node3  
+      - node.name=es6-node3
       - node.ingest=false  
     ulimits:
       memlock:

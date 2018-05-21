@@ -1,0 +1,43 @@
+#
+# The Alluxio Open Foundation licenses this work under the Apache License, version 2.0
+# (the "License"). You may not use this work except in compliance with the License, which is
+# available at www.apache.org/licenses/LICENSE-2.0
+#
+# This software is distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied, as more fully set forth in the License.
+#
+# See the NOTICE file distributed with this work for information regarding copyright ownership.
+#
+
+# Site specific configuration properties for Alluxio
+# Details about all configuration properties http://www.alluxio.org/documentation/en/Configuration-Settings.html
+
+# Common properties
+alluxio.master.hostname={{alluxio.master}}
+alluxio.underfs.address=/underStorage 
+
+# Security properties
+alluxio.security.authorization.permission.enabled=false
+alluxio.security.authentication.type=SIMPLE
+alluxio.security.login.username=elasticsearch
+# Worker properties
+#alluxio.worker.bind.host=172.19.0.112
+#alluxio.worker.data.bind.host=172.19.0.112
+#alluxio.worker.memory.size=2GB
+#alluxio.worker.tieredstore.levels=1
+alluxio.worker.tieredstore.level0.alias=MEM
+alluxio.worker.tieredstore.level0.dirs.path=/mnt/ramdisk
+
+#alluxio.worker.tieredstore.levels=2
+#alluxio.worker.tieredstore.level0.alias=MEM
+#alluxio.worker.tieredstore.level0.dirs.path=/mnt/ramdisk
+#alluxio.worker.tieredstore.level0.dirs.quota=1GB
+#alluxio.worker.tieredstore.level0.reserved.ratio=0.2
+#alluxio.worker.tieredstore.level1.alias=HDD
+#alluxio.worker.tieredstore.level1.dirs.path=/underStorage
+#alluxio.worker.tieredstore.level1.dirs.quota=2TB
+#alluxio.worker.tieredstore.level1.reserved.ratio=0.1
+
+# User properties
+alluxio.user.file.readtype.default=CACHE_PROMOTE
+alluxio.user.file.writetype.default=CACHE_THROUGH

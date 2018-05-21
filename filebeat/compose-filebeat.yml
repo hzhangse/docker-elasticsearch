@@ -1,0 +1,24 @@
+
+
+version: '2.2'
+services:
+  
+  
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:6.2.3
+    container_name: elasticsearch-filebeat
+
+      
+    networks:
+      - esnet 
+    
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./data:/usr/share/filebeat/data
+      - ./logs:/usr/share/filebeat/logs
+
+
+networks:
+  esnet:
+    external:
+      name: shadownet

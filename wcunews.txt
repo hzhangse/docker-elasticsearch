@@ -1,0 +1,133 @@
+curl -XPUT http://localhost:9200/wcunews-index -H 'Content-Type:application/json' -d'
+{
+	"settings": {
+                "index": {
+      "number_of_shards": "5",
+      "number_of_replicas": "1"
+     
+    },
+		"analysis": {
+			"filter": {
+				"english_stop": {
+					"type": "stop",
+					"stopwords": "_english_"
+				},
+				"english_stemmer": {
+					"type": "stemmer",
+					"language": "english"
+				},
+				"english_possessive_stemmer": {
+					"type": "stemmer",
+					"language": "possessive_english"
+				}
+			},
+			"analyzer": {
+				"std_english": {
+					"tokenizer": "standard",
+					"filter": [
+						"english_possessive_stemmer",
+						"english_stop",
+						"english_stemmer"
+					]
+				}
+			}
+		}
+	},
+
+	"mappings": {
+		"wcunews": {
+			"properties": {
+
+				"@version": {
+					"type": "keyword"
+
+				},
+				"id": {
+					"type": "long"
+				},
+				"link": {
+					"type": "keyword"
+				},
+				"news_txt": {
+					"type": "text",
+                                        "term_vector": "with_positions_offsets",
+					"analyzer": "std_english",
+					"search_analyzer": "std_english",
+					"fields": {
+
+						"cn": {
+							"type": "text",
+                                                        "term_vector": "with_positions_offsets",        
+							"analyzer": "ik_smart",
+							"search_analyzer": "ik_smart"
+						}
+					}
+
+				},
+				"newskey": {
+					"type": "keyword"
+
+				},
+				"postdate": {
+					"type": "keyword"
+				},
+				"tag": {
+					"type": "keyword"
+				},
+				"title": {
+					"type": "text",
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"type": {
+					"type": "keyword"
+				},
+				"university_id": {
+					"type": "long"
+				},
+				"colleage": {
+					"type": "keyword"
+				}
+			}
+		}
+	}
+}'
+
+
+
+
+curl -XPUT "http://localhost:9200/wcunews-index/_settings" -H 'Content-Type:application/json'  -d '{
+  "index.routing.allocation.total_shards_per_node" : 2
+  }'
+
+
+curl -XPUT localhost:9200/_cluster/settings -H 'Content-Type:application/json' -d'{"transient":{"cluster.routing.allocation.enable":"all"}}'
+
+curl -XPUT localhost:9200/_cluster/settings -H 'Content-Type:application/json' -d'{"transient":{"cluster.routing.allocation.awareness.attributes":"rack_id"}}'
+
+
+
+wcunews-index                     0     p      STARTED       0    230b 172.19.0.3  es6-node3
+wcunews-index                     1     p      STARTED       0    230b 172.19.0.7  es6-node2
+wcunews-index                     2     p      STARTED       0    230b 172.19.0.4  es6-node1
+
+wcunews-index                     0     r      STARTED       0    230b 172.19.0.7  es6-node2
+wcunews-index                     1     r      STARTED       0    230b 172.19.0.4  es6-node1
+wcunews-index                     2     r      STARTED       0    230b 172.19.0.3  es6-node3
+
+POST /_cluster/reroute
+{
+	"commands": [{
+		"allocate_replica": {
+			"index": "wcunews-index",
+			"shard": 2,
+			"node": "es6-node2",
+			"allow_primary": 1
+		}
+	}]
+}
+
