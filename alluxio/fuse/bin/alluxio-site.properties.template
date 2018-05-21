@@ -13,7 +13,7 @@
 # Details about all configuration properties http://www.alluxio.org/documentation/en/Configuration-Settings.html
 
 # Common properties
-alluxio.master.hostname={{alluxio.master}}
+alluxio.master.hostname={{alluxio_master}}
 alluxio.underfs.address=/underStorage 
 
 # Security properties
