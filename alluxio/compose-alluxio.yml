@@ -39,7 +39,7 @@ services:
       - ALLUXIO_SECURITY_AUTHENTICATION.TYPE=SIMPLE
       - ALLUXIO_SECURITY_AUTHORIZATION.PERMISSION.ENABLED=FALSE        
     volumes:
-      - /mnt/ramdisk:/opt/ramdisk
+      - /mnt/ramdisk1:/opt/ramdisk
       - /mnt/esmount:/underStorage 
     networks:
        esnet:
@@ -58,7 +58,7 @@ services:
       - ALLUXIO_SECURITY_AUTHENTICATION.TYPE=SIMPLE
       - ALLUXIO_SECURITY_AUTHORIZATION.PERMISSION.ENABLED=FALSE        
     volumes:
-      - /mnt/ramdisk:/opt/ramdisk
+      - /mnt/ramdisk1:/opt/ramdisk
       - /mnt/esmount:/underStorage 
     networks:
        esnet:
