@@ -9,9 +9,8 @@ RUN yum install -y  fuse fuse-devel
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
-COPY fuse /fuse
+COPY alluxio/fuse /fuse
 RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
-RUN chmod a+x /usr/local/bin/entrypoint.sh
 RUN chmod a+x /fuse/bin/alluxio-fuse
 RUN chmod a+x /fuse/bin/config.sh
 USER elasticsearch
