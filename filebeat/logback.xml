@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_FILE_ROOT_PATH" value="/var/log/tidecloud/data-accept" />
+	<property name="CONSOLE_PATTERN"
+		value="%gray(%d{MM-dd HH:mm:ss.SSS}) %highlight(%-5level) -- [%gray(%thread)] %cyan(%logger{26}:%line): %msg%n" />
+	<property name="FILE_PATTERN"
+		value="%d{MM-dd HH:mm:ss.SSS} %level -- [%thread]:%logger{26}:%line:[%X{deviceId}] %msg%n" />
+	<springProperty scope="context" name="logPath"
+		source="spring.profiles.active" />
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${FILE_PATTERN}</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC_CONSOLE" class="ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold>0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>512</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref="CONSOLE" />
+	</appender>
+	<appender name="STRATEGY-THREAD-INFO" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>strategyName</key>
+			<defaultValue>system</defaultValue>
+		</discriminator>
+		<sift>
+			<appender name="INFO_FILE_1"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+				<encoder>
+					<pattern>${FILE_PATTERN}</pattern>
+				</encoder>
+				<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+					<level>INFO</level>
+				</filter>
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<fileNamePattern>${LOG_FILE_ROOT_PATH}/${logPath}/${strategyName}/info%d{yyyy-MM-dd}.log
+					</fileNamePattern>
+					<MaxHistory>10</MaxHistory>
+				</rollingPolicy>
+			</appender>
+
+		</sift>
+	</appender>
+	
+	<appender name="ASYNC_INFO_FILE" class="ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold>0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>512</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref="STRATEGY-THREAD-INFO" />
+	</appender>
+	
+	<appender name="STRATEGY-THREAD-ERROR" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>strategyName</key>
+			<defaultValue>system</defaultValue>
+		</discriminator>
+		<sift>
+			<appender name="ERROR_FILE_1"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<File>${LOG_FILE_ROOT_PATH}/${logPath}/${strategyName}/error.log</File>
+				<encoder>
+					<pattern>${FILE_PATTERN}</pattern>
+				</encoder>
+				<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+					<level>ERROR</level>
+				</filter>
+				<rollingPolicy
+					class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+					<maxIndex>30</maxIndex>
+					<FileNamePattern>${LOG_FILE_ROOT_PATH}/${logPath}/${strategyName}/error.log.%i
+					</FileNamePattern>
+				</rollingPolicy>
+				<triggeringPolicy
+					class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+					<MaxFileSize>20MB</MaxFileSize>
+				</triggeringPolicy>
+			</appender>
+		</sift>
+	</appender>
+	<appender name="ASYNC_ERROR_FILE" class="ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold>0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>512</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref="STRATEGY-THREAD-ERROR" />
+	</appender>
+	
+	 <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ASYNC_INFO_FILE"/>
+        <appender-ref ref="ASYNC_ERROR_FILE"/>
+    </root>
+</configuration>

@@ -1,0 +1,122 @@
+version: '2.2'
+services:
+  elasticsearch:
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
+    container_name: elasticsearch-master
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true  
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - node.master=true 
+      - node.name=es6-master
+      - node.data=false 
+      - node.ingest=true  
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es-master:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - esnet
+      
+  elasticsearch-node1:
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
+    container_name: elasticsearch-node1
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
+      - node.master=false 
+      - node.data=true 
+      - node.attr.rack_id=es6-node1
+      - node.name=es6-node1
+      - node.ingest=false  
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    
+    volumes:
+      - es-node1:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+  elasticsearch-node2:
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
+    container_name: elasticsearch-node2
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
+      - node.master=false 
+      - node.data=true 
+      - node.attr.rack_id=es6-node2
+      - node.name=es6-node2
+      - node.ingest=false  
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es-node2:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+  elasticsearch-node3:
+    image: registry.cn-hangzhou.aliyuncs.com/rainbow954/elastic-search-compose
+    container_name: elasticsearch-node3
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch-master"
+      - node.master=false 
+      - node.data=true 
+      - node.attr.rack_id=es6-node3  
+      - node.name=es6-node3
+      - node.ingest=false  
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    
+    volumes:
+      - es-node3:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+ 
+volumes:
+  es-master:
+    driver: local
+    driver_opts:
+         type: none
+         device: /mnt/es/es0  
+         o: bind
+      
+  es-node1:
+    driver: local
+    driver_opts:
+         type: none
+         device: /mnt/es/es1 
+         o: bind
+  es-node2:
+    driver: local
+    driver_opts:
+         type: none
+         device: /mnt/es/es2 
+         o: bind
+  es-node3:
+    driver: local
+    driver_opts:
+         type: none
+         device: /mnt/es/es3
+         o: bind
+
+
+networks:
+  esnet:
+    external:
+      name: shadownet
